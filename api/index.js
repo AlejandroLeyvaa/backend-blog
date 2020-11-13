@@ -1,9 +1,12 @@
 const express = require('express');
-const { config } = require('./config');
 
+const { config } = require('../config');
+const user = require('./components/user/network');
 const app = express();
 
 app.use(express.json());
+
+// Routes
 
 app.get('/', (req, res) => {
 
@@ -12,6 +15,8 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/api/user', user);
+
 app.listen(config.port, () => {
-  console.log(`http://localhost:${config.port}`);
+  console.log(`Listening on http://localhost:${config.port}`);
 });
