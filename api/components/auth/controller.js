@@ -1,3 +1,4 @@
+const auth = require('../../auth')
 const TABLE = 'auth';
 
 module.exports = (injectedStore) => {
@@ -5,6 +6,18 @@ module.exports = (injectedStore) => {
 
   if (!store) {
     store = require('../../../store/dummy');
+  }
+
+  async function login(username, password) {
+    const data = await store.query(TABLE, { username: username });
+    console.log(['Data'], data);
+
+    if (data.password === password) {
+      // Token
+      return auth.sign(data);
+    } else {
+      throw new Error('Informacion inválida');
+    }
   }
 
   function updateAndInsert(data) {
@@ -23,5 +36,8 @@ module.exports = (injectedStore) => {
     return store.updateAndInsert(TABLE, authData);
   }
 
-  return { updateAndInsert };
+  return {
+    updateAndInsert,
+    login
+  };
 };
