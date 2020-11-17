@@ -1,5 +1,6 @@
 const express = require('express');
 
+const secure = require('./secure');
 const response = require('../../../network/response');
 const Controller = require('./index');
 
@@ -10,6 +11,7 @@ const router = express.Router();
 router.get('/', list);
 router.get('/:id', get);
 router.post('/', updateAndInsert);
+router.put('/', secure('update'), updateAndInsert);
 
 
 function list(req, res){
