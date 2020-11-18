@@ -15,9 +15,9 @@ function verify(token) {
 const check = {
   own: function (req, owner) {
     const decoded = decodeHeader(req);
-    console.log('[Decoded]', decoded);
+    console.log('[Decoded]', decoded, owner);
 
-    if (decoded.id !== owner) {
+    if (decoded.user_id !== owner) {
       throw error('Unauthorized', 401);
     }
   },
@@ -29,7 +29,7 @@ function getToken(auth) {
   }
 
   if (auth.indexOf('Bearer ') === -1) {
-    throw new Error('Invalid format');
+    throw error('Invalid format', 401);
   }
 
   let token = auth.replace('Bearer ', '');

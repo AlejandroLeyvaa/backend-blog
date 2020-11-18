@@ -1,7 +1,7 @@
 const { nanoid } = require('nanoid');
-const auth = require('../auth')
+const auth = require('../auth');
 
-const TABLE = 'user';
+const TABLE = 'users';
 
 module.exports = (injectedStore) => {
   let store = injectedStore;
@@ -22,23 +22,25 @@ module.exports = (injectedStore) => {
     const user = {
       name: body.name,
       username: body.username,
-    }
+    };
 
-    if (body.id) {
-      user.id = body.id;
-    } else {
-      user.id = nanoid();
-    }
-
-    if (body.password || body.username) {
+    if (body.user_id) {
+      user.user_id = body.user_id;
       await auth.updateAndInsert({
-        id: user.id,
+        user_id: user.user_id,
         username: user.username,
         password: body.password,
-      });
+      }, 'UPDATE');
+      return store.updateAndInsert(TABLE, user, 'UPDATE');
+    } else {
+      user.user_id = nanoid();
+      await auth.updateAndInsert({
+        user_id: user.user_id,
+        username: user.username,
+        password: body.password,
+      }, 'INSERT');
+      return store.updateAndInsert(TABLE, user, 'INSERT');
     }
-
-    return store.updateAndInsert(TABLE, user)
   }
 
   return {

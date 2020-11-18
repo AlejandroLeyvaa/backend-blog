@@ -12,9 +12,8 @@ app.use(express.json());
 // Routes
 
 app.get('/', (req, res) => {
-
   res.status(200).json({
-    "Hello": "World"
+    Hello: 'World',
   });
 });
 

@@ -9,30 +9,23 @@ module.exports = (injectedStore) => {
     store = require('../../../store/dummy');
   }
 
-  async function login(username, password) {
+  async function login(username, pass) {
     const data = await store.query(TABLE, { username: username });
 
-    return bcrypt.compare(password, data.password)
+    console.log('PASS', pass);
+    return bcrypt.compare(pass, data.password)
       .then((isEquals) => {
         if (isEquals === true) {
-          return auth.sign(data);
+          return auth.sign({ ...data});
         } else {
-          throw new Error('Información inválida');
+          throw new Error('Unauthorized');
         }
       });
-    console.log(['Data'], data);
-
-    if (data.password === password) {
-      // Token
-      return auth.sign(data);
-    } else {
-      throw new Error('Informacion inválida');
-    }
   }
 
-  async function updateAndInsert(data) {
+  async function updateAndInsert(data, action) {
     const authData = {
-      id: data.id,
+      user_id: data.user_id,
     };
 
     if (data.username) {
@@ -43,7 +36,7 @@ module.exports = (injectedStore) => {
       authData.password = await bcrypt.hash(data.password, 10);
     }
 
-    return store.updateAndInsert(TABLE, authData);
+    return store.updateAndInsert(TABLE, authData, action);
   }
 
   return {
