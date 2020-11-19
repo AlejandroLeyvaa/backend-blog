@@ -48,10 +48,10 @@ function list(table) {
   });
 }
 
-function get(table, id) {
+function get(table, row, id) {
   return new Promise((resolve, reject) => {
     connection.query(
-      `SELECT * FROM ${table} WHERE user_id=${id}`,
+      `SELECT * FROM ${table} WHERE ${row}='${id}'`,
       (err, data) => {
         if (err) return reject(err);
 
@@ -70,10 +70,10 @@ function insert(table, data) {
   });
 }
 
-function update(table, data) {
+function update(table, data, row) {
   return new Promise((resolve, reject) => {
     connection.query(
-      `UPDATE ${table} SET ? WHERE user_id=?`,
+      `UPDATE ${table} SET ? WHERE ${row}='${data.user_id}'`,
       [data, data.user_id],
       (err, result) => {
         if (err) return reject(err);
@@ -83,10 +83,10 @@ function update(table, data) {
   });
 }
 
-function updateAndInsert(table, data, action) {
+function updateAndInsert(table, data, action, row) {
   if (action === 'UPDATE') {
     console.log('UPDATE');
-    return update(table, data);
+    return update(table, data, row);
   } else if('INSERT') {
     console.log('INSERT DATA');
     return insert(table, data);
@@ -95,7 +95,6 @@ function updateAndInsert(table, data, action) {
 
 function query(table, q, join) {
   let joinQuery = '';
-  console.log('[JOIN]', join, Object.keys(join)[0]  );
   if(join) {
     const key = Object.keys(join)[0];
     const val = join[key];

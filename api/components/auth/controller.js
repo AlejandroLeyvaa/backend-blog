@@ -10,9 +10,9 @@ module.exports = (injectedStore) => {
   }
 
   async function login(username, pass) {
+    console.log('LOGIN FUNCTION', username, pass);
     const data = await store.query(TABLE, { username: username });
-
-    console.log('PASS', pass);
+    console.log('DATA', data);
     return bcrypt.compare(pass, data.password)
       .then((isEquals) => {
         if (isEquals === true) {
@@ -23,7 +23,9 @@ module.exports = (injectedStore) => {
       });
   }
 
-  async function updateAndInsert(data, action) {
+  async function updateAndInsert(data, action, row) {
+
+    console.log('[------]', data, action)
     const authData = {
       user_id: data.user_id,
     };
@@ -36,7 +38,12 @@ module.exports = (injectedStore) => {
       authData.password = await bcrypt.hash(data.password, 10);
     }
 
-    return store.updateAndInsert(TABLE, authData, action);
+    if (action === 'UPDATE') {
+      return store.updateAndInsert(TABLE, authData, action, row);
+    } else {
+      console.log('-------------------------->')
+      return store.updateAndInsert(TABLE, authData, action);
+    }
   }
 
   return {

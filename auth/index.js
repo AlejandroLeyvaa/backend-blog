@@ -22,7 +22,7 @@ const check = {
     }
   },
 
-  logged: function(req, owner) {
+  logged: function(req) {
     const decoded = decodeHeader(req);
   }
 };

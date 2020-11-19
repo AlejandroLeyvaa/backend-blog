@@ -2,6 +2,7 @@ const { nanoid } = require('nanoid');
 const auth = require('../auth');
 
 const TABLE = 'users';
+const ROW = 'user_id';
 
 module.exports = (injectedStore) => {
   let store = injectedStore;
@@ -15,7 +16,7 @@ module.exports = (injectedStore) => {
   }
 
   function get(id) {
-    return store.get(TABLE, id);
+    return store.get(TABLE, ROW, id);
   }
 
   async function updateAndInsert(body) {
@@ -26,15 +27,16 @@ module.exports = (injectedStore) => {
 
     if (body.user_id) {
       user.user_id = body.user_id;
-      await auth.updateAndInsert(
+      auth.updateAndInsert(
         {
           user_id: user.user_id,
           username: user.username,
           password: body.password,
         },
-        'UPDATE'
+        'UPDATE', ROW
       );
-      return store.updateAndInsert(TABLE, user, 'UPDATE');
+
+      return store.updateAndInsert(TABLE, user, 'UPDATE', ROW);
     } else {
       user.user_id = nanoid();
       await auth.updateAndInsert(
@@ -45,6 +47,7 @@ module.exports = (injectedStore) => {
         },
         'INSERT'
       );
+
       return store.updateAndInsert(TABLE, user, 'INSERT');
     }
   }
