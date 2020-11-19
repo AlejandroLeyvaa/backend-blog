@@ -93,9 +93,17 @@ function updateAndInsert(table, data, action) {
   }
 }
 
-function query(table, q) {
+function query(table, q, join) {
+  let joinQuery = '';
+  console.log('[JOIN]', join, Object.keys(join)[0]  );
+  if(join) {
+    const key = Object.keys(join)[0];
+    const val = join[key];
+    joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.user_id`
+  }
+
   return new Promise((resolve, reject) => {
-    connection.query(`SELECT * FROM ${table} WHERE ?`, q, (err, res) => {
+    connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, q, (err, res) => {
       if (err) return reject(err);
       resolve(res[0] || null);
     });
