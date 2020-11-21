@@ -39,6 +39,7 @@ function handleConnection() {
 handleConnection();
 
 function list(table) {
+  console.log(1);
   return new Promise((resolve, reject) => {
     connection.query(`SELECT * FROM ${table}`, (err, data) => {
       if (err) return reject(err);
@@ -49,6 +50,8 @@ function list(table) {
 }
 
 function get(table, row, id) {
+
+  console.log('Store', table, row, id)
   return new Promise((resolve, reject) => {
     connection.query(
       `SELECT * FROM ${table} WHERE ${row}='${id}'`,
@@ -112,6 +115,7 @@ function query(table, q, join) {
 module.exports = {
   list,
   get,
+  insert,
   updateAndInsert,
   query,
 };

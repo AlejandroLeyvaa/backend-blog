@@ -15,8 +15,6 @@ function verify(token) {
 const check = {
   own: function (req, owner) {
     const decoded = decodeHeader(req);
-    console.log('[Decoded]', decoded, owner);
-
     if (decoded.user_id !== owner) {
       throw error('Unauthorized', 401);
     }
@@ -29,7 +27,7 @@ const check = {
 
 function getToken(auth) {
   if (!auth) {
-    throw new Error('Toke not found');
+    throw error('Token not found');
   }
 
   if (auth.indexOf('Bearer ') === -1) {
