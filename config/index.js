@@ -15,6 +15,9 @@ const config = {
   mysqlService: {
     host: process.env.MYSQL_SERVICE_HOST || 'localhost',
     port: process.env.MYSQL_SERVICE_PORT || 3001,
+  },
+  post: {
+    port: process.env.POST_PORT || 3002,
   }
 };
 

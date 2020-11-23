@@ -13,6 +13,7 @@ const router = express.Router();
 router.get('/:table', list);
 router.get('/:table/:id', get);
 router.post('/:table', insert);
+router.put('/:table/:id', update);
 // router.put('/:table/:id', updateAndInsert);
 
 let ROW = '';
@@ -38,37 +39,45 @@ async function get(req, res, next) {
   response.success(req, res, data, 200);
 }
 
-async function insert (req, res, next) {
-  if (req.params.table === 'users') {
+async function insert(req, res, next) {
+  const body = req.body;
 
-    const body = req.body
+  if (req.params.table === 'users') {
     const user = {
       user_id: nanoid(),
-    name: body.name,
-    username: body.username,
-  };
+      name: body.name,
+      username: body.username,
+    };
 
-  if (body.password) {
-    ROW = 'user_id';
-    console.log('PASS');
-    auth.updateAndInsert(
-      {
-        user_id: user.user_id,
-        username: user.username,
-        password: body.password,
-      },
-      'INSERT'
+    if (body.password) {
+      auth.updateAndInsert(
+        {
+          user_id: user.user_id,
+          username: user.username,
+          password: body.password,
+        },
+        'INSERT'
       );
     }
 
     const data = await Store.insert(req.params.table, user);
     response.success(req, res, data, 200);
-
   } else if (req.params.table === 'posts') {
-    console.log('Posts');
-  }
-}
+    const data = await Store.insert(req.params.table, body);
+    response.success(req, res, data, 200);
+  };
+};
 
+async function update(req, res, next) {
+  if (req.params.table === 'users') {
+    ROW = 'user_id';
+  } else if (req.params.table === 'posts') {
+    ROW = 'post_id';
+  }
+
+  const data = await Store.update(req.params.table, req.params.id, ROW);
+  response.success(req, res, data, 200);
+}
 
 
 module.exports = router;

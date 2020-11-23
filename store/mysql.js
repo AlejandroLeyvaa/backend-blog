@@ -39,7 +39,6 @@ function handleConnection() {
 handleConnection();
 
 function list(table) {
-  console.log(1);
   return new Promise((resolve, reject) => {
     connection.query(`SELECT * FROM ${table}`, (err, data) => {
       if (err) return reject(err);
@@ -50,8 +49,6 @@ function list(table) {
 }
 
 function get(table, row, id) {
-
-  console.log('Store', table, row, id)
   return new Promise((resolve, reject) => {
     connection.query(
       `SELECT * FROM ${table} WHERE ${row}='${id}'`,
@@ -88,10 +85,8 @@ function update(table, data, row) {
 
 function updateAndInsert(table, data, action, row) {
   if (action === 'UPDATE') {
-    console.log('UPDATE');
     return update(table, data, row);
   } else if('INSERT') {
-    console.log('INSERT DATA');
     return insert(table, data);
   }
 }
