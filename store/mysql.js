@@ -10,13 +10,13 @@ const dbConfig = {
   database: config.mysql.database,
 };
 
-const clearDB = process.env.CLEARDB_DATABASE_URL;
+const clearDB = config.clear.db;
 // connection
 
 let connection;
 
 function handleConnection() {
-  connection = mysql.createConnection(dbConfig || clearDB);
+  connection = mysql.createConnection(clearDB);
 
   connection.connect((err) => {
     if (err) {
