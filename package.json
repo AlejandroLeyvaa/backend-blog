@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js",
+    "start": "node ./api/index.js",
     "dev": "nodemon ./api/index.js",
     "dev:mysql": "nodemon ./mysql/index-mysql.js",
     "dev:post": "nodemon ./post/index-post.js"
