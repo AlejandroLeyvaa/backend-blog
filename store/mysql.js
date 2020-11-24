@@ -11,11 +11,11 @@ const dbConfig = {
 };
 
 const clearDB = {
-  host: config.clear.CLEAR_HOST,
-  port: config.clear.CLEAR_PORT,
-  user: config.clear.CLEAR_USER,
-  password: config.clear.CLEAR_PASS,
-  database: config.clear.CLEAR_DB,
+  host: config.clear.host,
+  port: config.clear.port,
+  user: config.clear.user,
+  password: config.clear.password,
+  database: config.clear.database,
 };
 // connection
 
