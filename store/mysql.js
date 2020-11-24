@@ -12,6 +12,7 @@ const dbConfig = {
 
 const clearDB = {
   host: config.clear.CLEAR_HOST,
+  port: config.clear.CLEAR_PORT,
   user: config.clear.CLEAR_USER,
   password: config.clear.CLEAR_PASS,
   database: config.clear.CLEAR_DB,

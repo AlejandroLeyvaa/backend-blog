@@ -21,6 +21,7 @@ const config = {
   },
   clear: {
     host: process.env.CLEAR_HOST,
+    port: process.env.CLEAR_PORT,
     user: process.env.CLEAR_USER,
     password: process.env.CLEAR_PASS,
     database: process.env.CLEAR_DB,
