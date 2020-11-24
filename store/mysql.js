@@ -10,7 +10,12 @@ const dbConfig = {
   database: config.mysql.database,
 };
 
-const clearDB = config.clear.db;
+const clearDB = {
+  host: config.clear.CLEAR_HOST,
+  user: config.clear.CLEAR_USER,
+  password: config.clear.CLEAR_PASS,
+  database: config.clear.CLEAR_DB,
+};
 // connection
 
 let connection;
