@@ -1,23 +1,47 @@
 {
   "version": 2,
   "builds": [
-      {
-          "src": "api/index.js",
-          "use": "@vercel/node"
-      },
-      {
-          "src": "post/index-post.js",
-          "use": "@vercel/node"
-      }
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "auth/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "config/index.js",
+      "use": "@vercel/node"
+    },
+    {
+        "src": "mysql/index-mysql.js",
+        "use": "@vercel/node"
+    },
+    {
+        "src": "./network",
+        "use": "@vercel/node"
+    },
+    {
+      "src": "post/index-post.js",
+      "use": "@vercel/node"
+    },
+    {
+        "src": "./store",
+        "use": "@vercel/node"
+    },
+    {
+        "src": "utils/error.js",
+        "use": "@vercel/node"
+    }
   ],
   "routes": [
-      {
-          "src": "/api/user(.*)",
-          "dest": "/api/index.js"
-      },
-      {
-          "src": "/api/post(.*)",
-          "dest": "/post/index-post.js"
-      }
+    {
+      "src": "/api/user(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/api/post(.*)",
+      "dest": "/post/index-post.js"
+    }
   ]
 }

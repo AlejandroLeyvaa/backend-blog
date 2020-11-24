@@ -18,6 +18,12 @@ const config = {
   },
   post: {
     port: process.env.POST_PORT || 3002,
+  },
+  clear: {
+    host: process.env.CLEAR_HOST,
+    user: process.env.CLEAR_USER,
+    password: process.env.CLEAR_PASS,
+    database: process.env.CLEAR_DB,
   }
 };
 
